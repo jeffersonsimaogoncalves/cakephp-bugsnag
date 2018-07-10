@@ -4,6 +4,7 @@ namespace Bugsnag\Log\Engine;
 
 use Bugsnag\Client;
 use Bugsnag\Error;
+use Bugsnag\Report;
 use Cake\Core\Configure;
 use Cake\Log\Engine\BaseLog;
 
@@ -105,6 +106,8 @@ class BugsnagLog extends BaseLog
     public function log($level, $message, array $context = [])
     {
         $level = isset($this->_levels[$level]) ? $this->_levels[$level] : 'info';
-        $this->_client->notifyError(ucfirst($level), $message, $context, $level);
+        $this->_client->notifyError(ucfirst($level), $message, function (Report $report) use ($context) {
+            $report->setContext($context);
+        });
     }
 }
