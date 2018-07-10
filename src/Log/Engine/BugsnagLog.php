@@ -64,8 +64,8 @@ class BugsnagLog extends BaseLog
     {
         parent::__construct($config);
         $apiKey = Configure::read('Bugsnag.apiKey');
-        if (!$apiKey && env('API_KEY')) {
-            $apiKey = env('API_KEY');
+        if (!$apiKey && env('BUGSNAG_API_KEY')) {
+            $apiKey = env('BUGSNAG_API_KEY');
         }
         if (!$apiKey) {
             return;
